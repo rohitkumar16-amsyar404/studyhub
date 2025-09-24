@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes to Quizzes & Mind Maps</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Notes to Quizzes & Mind Maps</h1>
+    <nav class="tabs" role="tablist" aria-label="Main sections">
+      <button id="tab-teacher" class="tab active" role="tab" aria-selected="true" aria-controls="panel-teacher">Teacher</button>
+      <button id="tab-student" class="tab" role="tab" aria-selected="false" aria-controls="panel-student">Student</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="panel-teacher" class="panel" role="tabpanel" aria-labelledby="tab-teacher">
+      <div class="card">
+        <h2>Upload Notes</h2>
+        <p class="muted">Upload PDF or TXT files, or paste raw text. We'll generate a quiz and a simple mind map.</p>
+
+        <label class="field">
+          <span class="label">Title (optional)</span>
+          <input type="text" id="noteTitle" placeholder="e.g., Chapter 3: Photosynthesis">
+        </label>
+
+        <div class="uploader">
+          <div>
+            <label for="fileInput" class="label">Upload files</label>
+            <div id="dropZone" class="dropzone" aria-label="Drop PDF or TXT files here">
+              <div>Drag & drop PDF/TXT here</div>
+              <div class="muted">or click to select</div>
+              <input type="file" id="fileInput" accept=".pdf,.txt" multiple aria-label="File input">
+            </div>
+            <ul id="fileList" class="file-list"></ul>
+          </div>
+          <div class="or">or</div>
+          <textarea id="textInput" rows="8" placeholder="Paste notes text here..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="btnGenerate" class="primary">Generate Quiz & Mind Map</button>
+          <span id="statusMsg" class="status" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Preview (most recent)</h3>
+        <div id="preview" class="preview">
+          <div class="empty">Nothing yet. Generate something to see a preview here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-student" class="panel hidden" role="tabpanel" aria-labelledby="tab-student">
+      <div class="card">
+        <h2>Study Materials</h2>
+        <div id="materialsList" class="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Quiz Modal -->
+  <dialog id="quizModal" class="modal">
+    <form method="dialog" class="modal-content">
+      <header class="modal-header">
+        <h3 id="quizTitle">Quiz</h3>
+        <button id="closeQuiz" value="cancel" class="icon-btn" title="Close" aria-label="Close">✕</button>
+      </header>
+      <div id="quizContainer" class="quiz"></div>
+      <footer class="modal-footer">
+        <button id="submitQuiz" type="button" class="primary">Submit</button>
+        <button value="cancel" class="secondary">Close</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Mind Map Modal -->
+  <dialog id="mapModal" class="modal">
+    <form method="dialog" class="modal-content">
+      <header class="modal-header">
+        <h3 id="mapTitle">Mind Map</h3>
+        <button id="closeMap" value="cancel" class="icon-btn" title="Close" aria-label="Close">✕</button>
+      </header>
+      <div id="mapContainer" class="map"></div>
+      <footer class="modal-footer">
+        <button value="cancel" class="secondary">Close</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- PDF.js for client-side PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window['pdfjsLib']) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
